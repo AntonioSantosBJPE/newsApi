@@ -10,13 +10,16 @@ datasource db {
 
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @db.VarChar(80) @unique 
-  name  String  @db.VarChar(80)
+  id    Int       @id @default(autoincrement())
+  email String    @db.VarChar(80) @unique 
+  name  String    @db.VarChar(80)
+  password String @db.VarChar(120)
+
+  isAdmin Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  isDeleted Boolean @default(false)
+  isDeleted Boolean  @default(false)
 
   @@map("users")
 }
