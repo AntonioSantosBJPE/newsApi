@@ -15,7 +15,7 @@ export const UserCreateSchema = z.object({
   name: z.string().max(80),
   email: z.string().email().max(80),
   password: z.string().max(120),
-  isAdmin: z.boolean().optional(),
+  isAdmin: z.boolean(),
 });
 
 export const UserUpdateSchema = z.object({

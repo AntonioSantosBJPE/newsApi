@@ -1,9 +1,16 @@
+import { User } from "@prisma/client";
+import { prisma } from "../../server";
 import { hash } from "bcryptjs";
 import { AppError } from "../../errors";
+import {
+  iUserCreate,
+  iUserReturnCreated,
+} from "../../interfaces/users.interfaces";
 import { UserReturnCreatedSchema } from "../../schemas/users.schemas";
-import { prisma } from "../../server";
 
-export const createUsersService = async (payload: any): Promise<any> => {
+export const createUsersService = async (
+  payload: iUserCreate
+): Promise<iUserReturnCreated> => {
   const findEmailUser = await prisma.user.findUnique({
     where: {
       email: payload.email,
@@ -14,12 +21,13 @@ export const createUsersService = async (payload: any): Promise<any> => {
     throw new AppError("Email already exists", 409);
   } else {
     payload.password = await hash(payload.password, 10);
-    const user = await prisma.user.create({
+    const user: User = await prisma.user.create({
       data: {
         ...payload,
       },
     });
-    const responseUser = UserReturnCreatedSchema.parse(user);
+    const responseUser: iUserReturnCreated =
+      UserReturnCreatedSchema.parse(user);
     return responseUser;
   }
 };
