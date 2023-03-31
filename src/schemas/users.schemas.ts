@@ -31,3 +31,8 @@ export const UserReturnCreatedSchema = UserSchema.omit({
 export const UserReturnUpdatedSchema = UserReturnCreatedSchema;
 
 export const UserReturnListSchema = UserReturnCreatedSchema.array();
+
+export const UserLoginSchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
+});

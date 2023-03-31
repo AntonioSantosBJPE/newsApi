@@ -11,7 +11,7 @@ import { UserReturnCreatedSchema } from "../../schemas/users.schemas";
 export const createUsersService = async (
   payload: iUserCreate
 ): Promise<iUserReturnCreated> => {
-  const findEmailUser = await prisma.user.findUnique({
+  const findEmailUser: User | null = await prisma.user.findUnique({
     where: {
       email: payload.email,
     },
@@ -19,15 +19,14 @@ export const createUsersService = async (
 
   if (findEmailUser) {
     throw new AppError("Email already exists", 409);
-  } else {
-    payload.password = await hash(payload.password, 10);
-    const user: User = await prisma.user.create({
-      data: {
-        ...payload,
-      },
-    });
-    const responseUser: iUserReturnCreated =
-      UserReturnCreatedSchema.parse(user);
-    return responseUser;
   }
+
+  payload.password = await hash(payload.password, 10);
+  const user: User = await prisma.user.create({
+    data: {
+      ...payload,
+    },
+  });
+  const responseUser: iUserReturnCreated = UserReturnCreatedSchema.parse(user);
+  return responseUser;
 };

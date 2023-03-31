@@ -13,7 +13,7 @@ app.use("/teste/", async (req: Request, res: Response): Promise<Response> => {
   return res.status(200).json("teste");
 });
 
-app.use("/users/", usersRoutes);
+app.use("/users", usersRoutes);
 
 app.use(errorHandler);
 
