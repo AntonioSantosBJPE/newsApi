@@ -1,6 +1,6 @@
 import { User } from "@prisma/client";
 import { prisma } from "../../server";
-import { compare, hash } from "bcryptjs";
+import { compare } from "bcryptjs";
 import { AppError } from "../../errors";
 import { iUserLogin } from "../../interfaces/users.interfaces";
 import { sign } from "jsonwebtoken";
@@ -15,6 +15,10 @@ export const loginUsersService = async (
   });
 
   if (!findUser) {
+    throw new AppError("Invalid credentials", 401);
+  }
+
+  if (findUser.isDeleted) {
     throw new AppError("Invalid credentials", 401);
   }
 

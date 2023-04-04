@@ -3,9 +3,11 @@ import {
   iUserCreate,
   iUserLogin,
   iUserReturnCreated,
+  iUserReturnList,
 } from "../interfaces/users.interfaces";
 import { createUsersService } from "../services/users/createUsers.service";
 import { loginUsersService } from "../services/users/loginUsers.service";
+import { retrieveUsersService } from "../services/users/retrieveUsers.service";
 
 export const createUsersController = async (
   req: Request,
@@ -23,4 +25,12 @@ export const loginUsersController = async (
   const body: iUserLogin = req.body;
   const token: string = await loginUsersService(body);
   return res.status(200).json({ token });
+};
+
+export const retrieveUsersController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const listUsers: iUserReturnList = await retrieveUsersService();
+  return res.status(200).json(listUsers);
 };
