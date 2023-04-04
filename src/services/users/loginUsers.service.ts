@@ -4,6 +4,7 @@ import { compare } from "bcryptjs";
 import { AppError } from "../../errors";
 import { iUserLogin } from "../../interfaces/users.interfaces";
 import { sign } from "jsonwebtoken";
+import { validateFindUser } from "./logics.service";
 
 export const loginUsersService = async (
   payload: iUserLogin
@@ -14,17 +15,11 @@ export const loginUsersService = async (
     },
   });
 
-  if (!findUser) {
-    throw new AppError("Invalid credentials", 401);
-  }
-
-  if (findUser.isDeleted) {
-    throw new AppError("Invalid credentials", 401);
-  }
+  validateFindUser(findUser, "Invalid credentials", 401);
 
   const passwordMatch: boolean = await compare(
     payload.password,
-    findUser.password
+    findUser!.password
   );
 
   if (!passwordMatch) {
@@ -33,13 +28,13 @@ export const loginUsersService = async (
 
   const token: string = sign(
     {
-      email: findUser.email,
-      admin: findUser.isAdmin,
+      email: findUser!.email,
+      admin: findUser!.isAdmin,
     },
     String(process.env.SECRET_KEY),
     {
       expiresIn: "24h",
-      subject: String(findUser.id),
+      subject: String(findUser!.id),
     }
   );
 

@@ -2,9 +2,11 @@ import { Router } from "express";
 import {
   createUsersController,
   loginUsersController,
+  retrieveProfileUserContoller,
   retrieveUsersController,
 } from "../controllers/users.controller";
 import { validateBodyMiddleware } from "../middlewares/global/validateBody.middleware";
+import { validateTokenJwtMiddleware } from "../middlewares/global/validateTokenJwt.middlewares";
 import { UserCreateSchema, UserLoginSchema } from "../schemas/users.schemas";
 export const usersRoutes: Router = Router();
 
@@ -20,4 +22,10 @@ usersRoutes.post(
   loginUsersController
 );
 
-usersRoutes.get("", retrieveUsersController);
+usersRoutes.get("", validateTokenJwtMiddleware, retrieveUsersController);
+
+usersRoutes.get(
+  "/profile/:id/",
+  validateTokenJwtMiddleware,
+  retrieveProfileUserContoller
+);

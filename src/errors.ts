@@ -1,4 +1,3 @@
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { NextFunction, Request, Response } from "express";
 import { ZodError } from "zod";
 export class AppError extends Error {
