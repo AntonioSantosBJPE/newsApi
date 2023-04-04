@@ -6,6 +6,7 @@ import {
   iUserReturnList,
 } from "../interfaces/users.interfaces";
 import { createUsersService } from "../services/users/createUsers.service";
+import { deleteUserService } from "../services/users/deleteUser.service";
 import { loginUsersService } from "../services/users/loginUsers.service";
 import { retrieveProfileUserService } from "../services/users/retrieveProfileUser.service";
 import { retrieveUsersService } from "../services/users/retrieveUsers.service";
@@ -43,4 +44,13 @@ export const retrieveProfileUserContoller = async (
   const userId: string = req.params.id;
   const userProfile = await retrieveProfileUserService(userId);
   return res.status(200).json(userProfile);
+};
+
+export const deleteUserController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const userId: string = req.params.id;
+  await deleteUserService(userId);
+  return res.status(204).json();
 };

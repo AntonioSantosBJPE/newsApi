@@ -13,3 +13,9 @@ export type iUserReturnUpdated = z.infer<typeof UserReturnUpdatedSchema>;
 export type iUserReturnList = z.infer<typeof UserReturnListSchema>;
 
 export type iUserLogin = z.infer<typeof UserLoginSchema>;
+
+export interface IuserTokenInfos {
+  email: string;
+  id: string;
+  admin: boolean;
+}
