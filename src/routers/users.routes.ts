@@ -5,11 +5,16 @@ import {
   loginUsersController,
   retrieveProfileUserContoller,
   retrieveUsersController,
+  updateUserController,
 } from "../controllers/users.controller";
 import { validateBodyMiddleware } from "../middlewares/global/validateBody.middleware";
 import { validatePermissionIdMiddleware } from "../middlewares/global/validatePermissionId.middlewares";
 import { validateTokenJwtMiddleware } from "../middlewares/global/validateTokenJwt.middlewares";
-import { UserCreateSchema, UserLoginSchema } from "../schemas/users.schemas";
+import {
+  UserCreateSchema,
+  UserLoginSchema,
+  UserUpdateSchema,
+} from "../schemas/users.schemas";
 export const usersRoutes: Router = Router();
 
 usersRoutes.post(
@@ -37,4 +42,12 @@ usersRoutes.delete(
   validateTokenJwtMiddleware,
   validatePermissionIdMiddleware,
   deleteUserController
+);
+
+usersRoutes.patch(
+  "/:id/",
+  validateTokenJwtMiddleware,
+  validatePermissionIdMiddleware,
+  validateBodyMiddleware(UserUpdateSchema),
+  updateUserController
 );

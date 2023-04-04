@@ -5,6 +5,9 @@ import { User } from "@prisma/client";
 
 export const retrieveUsersService = async (): Promise<iUserReturnList> => {
   const findUsers: User[] = await prisma.user.findMany({
+    orderBy: {
+      id: "asc",
+    },
     where: {
       isDeleted: false,
     },
