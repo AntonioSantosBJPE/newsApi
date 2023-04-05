@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createNewsController,
+  retrieveNewsByIdController,
   retrieveNewsController,
 } from "../controllers/news.controller";
 import { validateBodyMiddleware } from "../middlewares/global/validateBody.middleware";
@@ -17,3 +18,5 @@ newsRoutes.post(
 );
 
 newsRoutes.get("", retrieveNewsController);
+
+newsRoutes.get("/:id/", retrieveNewsByIdController);

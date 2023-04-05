@@ -6,6 +6,7 @@ import {
 } from "../interfaces/news.interfaces";
 import { createNewsService } from "../services/news/createNews.service";
 import { retrieveNewsService } from "../services/news/retrieveNews.service";
+import { retrieveNewsByIdService } from "../services/news/retrieveNewsById.service";
 
 export const createNewsController = async (
   req: Request,
@@ -26,4 +27,13 @@ export const retrieveNewsController = async (
 ): Promise<Response> => {
   const newsList: iReturnListNews = await retrieveNewsService();
   return res.status(200).json(newsList);
+};
+
+export const retrieveNewsByIdController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const news_id: string = req.params.id;
+  const news: iReturnNewsCreated = await retrieveNewsByIdService(news_id);
+  return res.status(200).json(news);
 };
