@@ -8,7 +8,7 @@ import {
   updateUserController,
 } from "../controllers/users.controller";
 import { validateBodyMiddleware } from "../middlewares/global/validateBody.middleware";
-import { validatePermissionIdMiddleware } from "../middlewares/global/validatePermissionId.middlewares";
+import { validatePermissionUserIdMiddleware } from "../middlewares/users/validatePermissionUserId.middlewares";
 import { validateTokenJwtMiddleware } from "../middlewares/global/validateTokenJwt.middlewares";
 import {
   UserCreateSchema,
@@ -40,14 +40,14 @@ usersRoutes.get(
 usersRoutes.delete(
   "/:id/",
   validateTokenJwtMiddleware,
-  validatePermissionIdMiddleware,
+  validatePermissionUserIdMiddleware,
   deleteUserController
 );
 
 usersRoutes.patch(
   "/:id/",
   validateTokenJwtMiddleware,
-  validatePermissionIdMiddleware,
+  validatePermissionUserIdMiddleware,
   validateBodyMiddleware(UserUpdateSchema),
   updateUserController
 );

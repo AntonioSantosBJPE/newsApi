@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { AppError } from "../../errors";
 import { IuserTokenInfos } from "../../interfaces/users.interfaces";
 
-export const validatePermissionIdMiddleware = async (
+export const validatePermissionUserIdMiddleware = async (
   req: Request,
   res: Response,
   next: NextFunction

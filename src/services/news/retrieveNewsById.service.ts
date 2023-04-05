@@ -23,6 +23,10 @@ export const retrieveNewsByIdService = async (
     throw new AppError("News not found", 404);
   }
 
+  if (find_news.published === false) {
+    throw new AppError("News not found", 404);
+  }
+
   const responseNewsSerializer: iReturnNewsCreated =
     ReturnNewsCreatedSchema.parse(find_news);
   return responseNewsSerializer;
