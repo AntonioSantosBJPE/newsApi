@@ -25,8 +25,9 @@ export const ReturnNewsCreatedSchema = z.object({
   id: z.number().positive().int(),
   title: z.string().max(80),
   content: z.string(),
-  published: z.boolean(),
   createdAt: z.date(),
   updatedAt: z.date(),
   author: authorSchema,
 });
+
+export const ReturnListNewsSchema = ReturnNewsCreatedSchema.array();

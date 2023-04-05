@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { createNewsController } from "../controllers/news.controller";
+import {
+  createNewsController,
+  retrieveNewsController,
+} from "../controllers/news.controller";
 import { validateBodyMiddleware } from "../middlewares/global/validateBody.middleware";
 import { validateTokenJwtMiddleware } from "../middlewares/global/validateTokenJwt.middlewares";
 import { NewsCreateSchema } from "../schemas/news.schemas";
@@ -12,3 +15,5 @@ newsRoutes.post(
   validateBodyMiddleware(NewsCreateSchema),
   createNewsController
 );
+
+newsRoutes.get("", retrieveNewsController);
