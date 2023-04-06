@@ -3,17 +3,34 @@ import { z } from "zod";
 export const NewsSchema = z.object({
   id: z.number().positive().int(),
   title: z.string().max(80),
+  subTitle: z.string(),
   content: z.string(),
+  type: z.enum([
+    "Outros",
+    "Política",
+    "Economia",
+    "Cultura",
+    "Segurança",
+    "Saúde",
+    "Educação",
+    "Esportes",
+    "Tecnologia",
+  ]),
   published: z.boolean(),
   createdAt: z.date(),
   updatedAt: z.date(),
   authorId: z.number(),
 });
 
-export const NewsCreateSchema = z.object({
-  title: z.string().max(80),
-  content: z.string(),
+export const NewsCreateSchema = NewsSchema.omit({
+  id: true,
+  published: true,
+  createdAt: true,
+  updatedAt: true,
+  authorId: true,
 });
+
+export const NewsUpdateSchema = NewsCreateSchema.partial();
 
 const authorSchema = z.object({
   id: z.number().positive().int(),
@@ -21,12 +38,7 @@ const authorSchema = z.object({
   email: z.string().email().max(80),
 });
 
-export const ReturnNewsCreatedSchema = z.object({
-  id: z.number().positive().int(),
-  title: z.string().max(80),
-  content: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+export const ReturnNewsCreatedSchema = NewsSchema.extend({
   author: authorSchema,
 });
 

@@ -30,7 +30,10 @@ model User {
 model News{
   id    Int       @id @default(autoincrement())
   title String
+  subTitle String
   content String
+  type String @default("Outros")
+
   published Boolean @default(true)
 
   createdAt DateTime @default(now())

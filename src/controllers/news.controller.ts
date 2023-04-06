@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import {
   iNewsCreate,
+  iNewsUpdate,
   iReturnListNews,
   iReturnNewsCreated,
 } from "../interfaces/news.interfaces";
@@ -8,6 +9,7 @@ import { createNewsService } from "../services/news/createNews.service";
 import { deleteNewsService } from "../services/news/deleteNews.service";
 import { retrieveNewsService } from "../services/news/retrieveNews.service";
 import { retrieveNewsByIdService } from "../services/news/retrieveNewsById.service";
+import { updateNewsService } from "../services/news/updateNews.service";
 
 export const createNewsController = async (
   req: Request,
@@ -46,4 +48,17 @@ export const deleteNewsController = async (
   const news_id: string = req.params.id;
   await deleteNewsService(news_id);
   return res.status(204).json();
+};
+
+export const updateNewsController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const news_id: string = req.params.id;
+  const body: iNewsUpdate = req.body;
+  const updatedNews: iReturnNewsCreated = await updateNewsService(
+    news_id,
+    body
+  );
+  return res.status(200).json(updatedNews);
 };
