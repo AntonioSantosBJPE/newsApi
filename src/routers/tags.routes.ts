@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { createTagsController } from "../controllers/tags.controller";
+import {
+  createTagsController,
+  retrieveTagsController,
+} from "../controllers/tags.controller";
 import { validateBodyMiddleware } from "../middlewares/global/validateBody.middleware";
 import { CreateTagsSchema } from "../schemas/tags.schemas";
 
@@ -10,3 +13,5 @@ tagsRoutes.post(
   validateBodyMiddleware(CreateTagsSchema),
   createTagsController
 );
+
+tagsRoutes.get("", retrieveTagsController);
