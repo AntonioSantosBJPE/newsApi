@@ -62,10 +62,10 @@ model Tag{
 model TagsNews{
   id    Int       @id @default(autoincrement())
 
-  news News @relation(fields: [newsId], references: [id])
+  news News @relation(fields: [newsId], references: [id], onDelete: Cascade)
   newsId Int 
 
-  tag Tag @relation(fields: [tagId], references: [id])
+  tag Tag @relation(fields: [tagId], references: [id], onDelete: Cascade)
   tagId Int
 
   @@map("tags_news")

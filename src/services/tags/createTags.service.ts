@@ -4,9 +4,13 @@ import { prisma } from "../../server";
 
 export const createTagsService = async (
   payload: iTagsCreate
-): Promise<(Tag | null)[]> => {
-  const data: iTagsCreateList[] = payload.tags.map((name: string) => {
-    return { name: name.toUpperCase() };
+): Promise<Tag[]> => {
+  const tagsToCreate = payload.tags.map((name) => {
+    return name.toUpperCase();
+  });
+
+  const data: iTagsCreateList[] = tagsToCreate.map((name: string) => {
+    return { name };
   });
 
   const createManyTags: Prisma.BatchPayload = await prisma.tag.createMany({
@@ -14,16 +18,10 @@ export const createTagsService = async (
     skipDuplicates: true,
   });
 
-  const findListTagsCreated: Promise<Tag | null>[] = payload.tags.map(
-    async (name: string) => {
-      return await prisma.tag.findUnique({
-        where: {
-          name: name.toUpperCase(),
-        },
-      });
-    }
-  );
-
-  const response: (Tag | null)[] = await Promise.all([...findListTagsCreated]);
+  const response: Tag[] = await prisma.tag.findMany({
+    where: {
+      name: { in: tagsToCreate },
+    },
+  });
   return response;
 };
