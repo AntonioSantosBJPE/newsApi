@@ -16,6 +16,11 @@ export const retrieveNewsByIdService = async (
     },
     include: {
       author: true,
+      tags: {
+        include: {
+          tag: true,
+        },
+      },
     },
   });
 

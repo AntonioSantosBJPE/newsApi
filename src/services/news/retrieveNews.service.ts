@@ -9,7 +9,6 @@ export const retrieveNewsService = async (
   const ordeBy = req.query.ordeBy
     ? req.query.ordeBy.toString().toLowerCase()
     : "asc";
-  
 
   const listNews = await prisma.news.findMany({
     where: {
@@ -17,6 +16,11 @@ export const retrieveNewsService = async (
     },
     include: {
       author: true,
+      tags: {
+        include: {
+          tag: true,
+        },
+      },
     },
     orderBy: {
       id: "asc",

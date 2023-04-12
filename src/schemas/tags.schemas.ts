@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const CreateTagsSchema = z.object({
-  tags: z.array(z.string()),
+  tags: z.array(z.string().max(30)),
 });
 
 export const DeleteTagsSchema = z.object({
