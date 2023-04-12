@@ -28,7 +28,7 @@ export const retrieveNewsController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const newsList: iReturnListNews = await retrieveNewsService();
+  const newsList: iReturnListNews = await retrieveNewsService(req);
   return res.status(200).json(newsList);
 };
 

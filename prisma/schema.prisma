@@ -42,7 +42,31 @@ model News{
   authorId Int
   author User @relation(fields: [authorId], references: [id])
 
-
+  tags TagsNews[]
+  
   @@map("news")
 
+}
+
+
+model Tag{
+  id    Int       @id @default(autoincrement())
+  name String @db.VarChar(30) @unique 
+
+  news TagsNews[]
+  
+  @@map("tags")
+}
+
+
+model TagsNews{
+  id    Int       @id @default(autoincrement())
+
+  news News @relation(fields: [newsId], references: [id])
+  newsId Int 
+
+  tag Tag @relation(fields: [tagId], references: [id])
+  tagId Int
+
+  @@map("tags_news")
 }

@@ -1,21 +1,21 @@
 import { z } from "zod";
-
+const typeOptions: any = [
+  "Outros",
+  "Política",
+  "Economia",
+  "Cultura",
+  "Segurança",
+  "Saúde",
+  "Educação",
+  "Esportes",
+  "Tecnologia",
+];
 export const NewsSchema = z.object({
   id: z.number().positive().int(),
   title: z.string().max(80),
   subTitle: z.string(),
   content: z.string(),
-  type: z.enum([
-    "Outros",
-    "Política",
-    "Economia",
-    "Cultura",
-    "Segurança",
-    "Saúde",
-    "Educação",
-    "Esportes",
-    "Tecnologia",
-  ]),
+  type: z.enum(typeOptions),
   published: z.boolean(),
   createdAt: z.date(),
   updatedAt: z.date(),
