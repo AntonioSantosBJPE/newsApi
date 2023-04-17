@@ -1,13 +1,12 @@
-import { Prisma, Tag } from "@prisma/client";
 import { iReturnNewsCreated } from "../../interfaces/news.interfaces";
-import { iTagsCreate, iTagsCreateList } from "../../interfaces/tags.interfaces";
+import { iTagsCreate } from "../../interfaces/tags.interfaces";
 import { ReturnNewsCreatedSchema } from "../../schemas/news.schemas";
 import { prisma } from "../../server";
 
 export const addTagsInNewsService = async (
   payload: iTagsCreate,
   newsId: string
-): Promise<any> => {
+): Promise<iReturnNewsCreated> => {
   const tagsPayload = payload.tags.map((name) => name.toUpperCase());
 
   const findRelationsNewsTags = await prisma.tagsNews.findMany({

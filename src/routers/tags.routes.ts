@@ -3,6 +3,7 @@ import {
   addTagsInNewsController,
   createTagsController,
   deleteTagsController,
+  removeTagsInNewsController,
   retrieveTagsController,
 } from "../controllers/tags.controller";
 import { validateBodyMiddleware } from "../middlewares/global/validateBody.middleware";
@@ -26,7 +27,7 @@ tagsRoutes.delete(
   "",
   validateTokenJwtMiddleware,
   validatePermissionUserAdminMiddleware,
-  validateBodyMiddleware(DeleteTagsSchema),
+  validateBodyMiddleware(CreateTagsSchema),
   deleteTagsController
 );
 
@@ -34,5 +35,14 @@ tagsRoutes.post(
   "/news/:id/",
   validateTokenJwtMiddleware,
   validateNewsOwnerdMiddleware,
+  validateBodyMiddleware(CreateTagsSchema),
   addTagsInNewsController
+);
+
+tagsRoutes.delete(
+  "/news/:id/",
+  validateTokenJwtMiddleware,
+  validateNewsOwnerdMiddleware,
+  validateBodyMiddleware(CreateTagsSchema),
+  removeTagsInNewsController
 );
