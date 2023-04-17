@@ -15,7 +15,7 @@ export const updateNewsService = async (
     },
     include: {
       author: true,
-      tags: {
+      tagsList: {
         include: {
           tag: true,
         },

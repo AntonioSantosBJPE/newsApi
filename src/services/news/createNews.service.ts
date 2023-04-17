@@ -49,7 +49,7 @@ export const createNewsService = async (
     },
     include: {
       author: true,
-      tags: {
+      tagsList: {
         include: {
           tag: true,
         },

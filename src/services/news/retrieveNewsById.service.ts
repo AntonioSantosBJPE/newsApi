@@ -16,7 +16,7 @@ export const retrieveNewsByIdService = async (
     },
     include: {
       author: true,
-      tags: {
+      tagsList: {
         include: {
           tag: true,
         },

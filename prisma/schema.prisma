@@ -42,7 +42,7 @@ model News{
   authorId Int
   author User @relation(fields: [authorId], references: [id])
 
-  tags TagsNews[]
+  tagsList TagsNews[]
   
   @@map("news")
 

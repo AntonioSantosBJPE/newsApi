@@ -36,3 +36,7 @@ export const UserLoginSchema = z.object({
   email: z.string().email(),
   password: z.string(),
 });
+
+export const UserLoginRefreshSchema = z.object({
+  token: z.string(),
+});

@@ -1,6 +1,7 @@
 import { z } from "zod";
 import {
   UserCreateSchema,
+  UserLoginRefreshSchema,
   UserLoginSchema,
   UserReturnCreatedSchema,
   UserReturnListSchema,
@@ -21,3 +22,10 @@ export interface IuserTokenInfos {
   id: string;
   admin: boolean;
 }
+
+export interface iUserTokensResponse {
+  accessToken: string;
+  refreshToken: string;
+}
+
+export type iUserLoginrefresh = z.infer<typeof UserLoginRefreshSchema>;

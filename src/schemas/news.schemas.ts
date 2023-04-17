@@ -50,7 +50,7 @@ const tags = z.object({
 
 export const ReturnNewsCreatedSchema = NewsSchema.extend({
   author: authorSchema,
-  tags: tags.array(),
+  tagsList: tags.array(),
 });
 
 export const ReturnListNewsSchema = ReturnNewsCreatedSchema.array();

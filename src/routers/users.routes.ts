@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   createUsersController,
   deleteUserController,
+  loginRefreshUsersController,
   loginUsersController,
   retrieveProfileUserContoller,
   retrieveUsersController,
@@ -12,9 +13,11 @@ import { validatePermissionUserIdMiddleware } from "../middlewares/users/validat
 import { validateTokenJwtMiddleware } from "../middlewares/global/validateTokenJwt.middlewares";
 import {
   UserCreateSchema,
+  UserLoginRefreshSchema,
   UserLoginSchema,
   UserUpdateSchema,
 } from "../schemas/users.schemas";
+import { validatePermissionUserAdminMiddleware } from "../middlewares/global/validateUserAdmin.middleware";
 export const usersRoutes: Router = Router();
 
 usersRoutes.post(
@@ -24,16 +27,28 @@ usersRoutes.post(
 );
 
 usersRoutes.post(
-  "/auth/",
+  "/login/",
   validateBodyMiddleware(UserLoginSchema),
   loginUsersController
 );
 
-usersRoutes.get("", validateTokenJwtMiddleware, retrieveUsersController);
+usersRoutes.post(
+  "/login/refresh-token/",
+  validateBodyMiddleware(UserLoginRefreshSchema),
+  loginRefreshUsersController
+);
+
+usersRoutes.get(
+  "",
+  validateTokenJwtMiddleware,
+  validatePermissionUserAdminMiddleware,
+  retrieveUsersController
+);
 
 usersRoutes.get(
   "/profile/:id/",
   validateTokenJwtMiddleware,
+  validatePermissionUserIdMiddleware,
   retrieveProfileUserContoller
 );
 

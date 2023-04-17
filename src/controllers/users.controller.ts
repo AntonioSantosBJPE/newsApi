@@ -2,13 +2,16 @@ import { Request, Response } from "express";
 import {
   iUserCreate,
   iUserLogin,
+  iUserLoginrefresh,
   iUserReturnCreated,
   iUserReturnList,
   iUserReturnUpdated,
+  iUserTokensResponse,
   iUserUpdate,
 } from "../interfaces/users.interfaces";
 import { createUsersService } from "../services/users/createUsers.service";
 import { deleteUserService } from "../services/users/deleteUser.service";
+import { loginRefreshUsersService } from "../services/users/loginRefreshUser.service";
 import { loginUsersService } from "../services/users/loginUsers.service";
 import { retrieveProfileUserService } from "../services/users/retrieveProfileUser.service";
 import { retrieveUsersService } from "../services/users/retrieveUsers.service";
@@ -28,7 +31,16 @@ export const loginUsersController = async (
   res: Response
 ): Promise<Response> => {
   const body: iUserLogin = req.body;
-  const token: string = await loginUsersService(body);
+  const tokens: iUserTokensResponse = await loginUsersService(body, res);
+  return res.status(200).json(tokens);
+};
+
+export const loginRefreshUsersController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const body: iUserLoginrefresh = req.body;
+  const token: string = await loginRefreshUsersService(body, req);
   return res.status(200).json({ token });
 };
 
