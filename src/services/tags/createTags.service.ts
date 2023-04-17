@@ -1,13 +1,12 @@
 import { Prisma, Tag } from "@prisma/client";
+import { AppError } from "../../errors";
 import { iTagsCreate, iTagsCreateList } from "../../interfaces/tags.interfaces";
 import { prisma } from "../../server";
 
 export const createTagsService = async (
   payload: iTagsCreate
 ): Promise<Tag[]> => {
-  const tagsToCreate = payload.tags.map((name) => {
-    return name.toUpperCase();
-  });
+  const tagsToCreate = payload.tags.map((name) => name.toUpperCase());
 
   const data: iTagsCreateList[] = tagsToCreate.map((name: string) => {
     return { name };
@@ -17,6 +16,13 @@ export const createTagsService = async (
     data,
     skipDuplicates: true,
   });
+
+  if (createManyTags.count === 0) {
+    throw new AppError(
+      `The tags /${payload.tags}/ sent already exist in the news`,
+      400
+    );
+  }
 
   const response: Tag[] = await prisma.tag.findMany({
     where: {

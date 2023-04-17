@@ -1,6 +1,8 @@
 import { Tag } from "@prisma/client";
 import { Request, Response } from "express";
+import { iReturnNewsCreated } from "../interfaces/news.interfaces";
 import { iTagsCreate, iTagsDelete } from "../interfaces/tags.interfaces";
+import { addTagsInNewsService } from "../services/tags/addTagsInNews.service";
 import { createTagsService } from "../services/tags/createTags.service";
 import { deleteTagsService } from "../services/tags/deleteTags.service";
 import { retrieveTagsService } from "../services/tags/retrieveTags.service";
@@ -29,4 +31,17 @@ export const deleteTagsController = async (
   const listTagsId: iTagsDelete = req.body;
   await deleteTagsService(listTagsId);
   return res.status(204).json();
+};
+
+export const addTagsInNewsController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const body: iTagsCreate = req.body;
+  const newsId: string = req.params.id;
+  const tagsCreated: iReturnNewsCreated = await addTagsInNewsService(
+    body,
+    newsId
+  );
+  return res.status(200).json(tagsCreated);
 };

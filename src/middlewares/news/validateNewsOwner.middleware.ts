@@ -30,7 +30,10 @@ export const validateNewsOwnerdMiddleware = async (
     throw new AppError("News not found", 404);
   }
 
-  if (!(findNews.authorId === Number(userInfosToken.id))) {
+  if (
+    findNews.authorId !== Number(userInfosToken.id) &&
+    !userInfosToken.admin
+  ) {
     throw new AppError("Insufficient permission", 403);
   }
 
