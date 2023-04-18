@@ -16,3 +16,5 @@ export const CommentsCreateReturnSchema = z.object({
   newsId: z.number().positive().int(),
   user: userSchema,
 });
+
+export const listCommentsReturn = CommentsCreateReturnSchema.array();
