@@ -6,6 +6,7 @@ import {
 } from "../interfaces/comments.interfaces";
 import { IuserTokenInfos } from "../interfaces/users.interfaces";
 import { createCommentsService } from "../services/comments/createComments.service";
+import { deleteCommentsByIdService } from "../services/comments/deleteCommentsById.service";
 import { listAllCommentsService } from "../services/comments/listAllComments.service";
 import { listAllCommentsBynewsService } from "../services/comments/listAllCommentsByNews.service";
 
@@ -41,4 +42,13 @@ export const listAllCommentsController = async (
 ): Promise<Response> => {
   const listComments: iCommentsListReturn = await listAllCommentsService();
   return res.status(200).json(listComments);
+};
+
+export const deleteCommentsByIdController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const commentId: string = req.params.id;
+  await deleteCommentsByIdService(commentId);
+  return res.status(204).json();
 };
