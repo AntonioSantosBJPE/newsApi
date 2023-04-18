@@ -21,6 +21,11 @@ export const retrieveNewsService = async (
           tag: true,
         },
       },
+      commentsList: {
+        include: {
+          user: true,
+        },
+      },
     },
     orderBy: {
       id: "asc",

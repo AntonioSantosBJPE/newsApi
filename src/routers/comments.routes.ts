@@ -4,6 +4,7 @@ import {
   deleteCommentsByIdController,
   listAllCommentsByNewsController,
   listAllCommentsController,
+  updateCommentsController,
 } from "../controllers/comments.contoller";
 import { validateCommentOwnerdMiddleware } from "../middlewares/comments/validateCommentOwner.middleware";
 import { validateBodyMiddleware } from "../middlewares/global/validateBody.middleware";
@@ -34,4 +35,12 @@ commentsRoutes.delete(
   validateTokenJwtMiddleware,
   validateCommentOwnerdMiddleware,
   deleteCommentsByIdController
+);
+
+commentsRoutes.patch(
+  "/:id/",
+  validateTokenJwtMiddleware,
+  validateCommentOwnerdMiddleware,
+  validateBodyMiddleware(CommentsCreateSchema),
+  updateCommentsController
 );

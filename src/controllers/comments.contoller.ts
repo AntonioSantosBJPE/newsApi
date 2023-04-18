@@ -9,6 +9,7 @@ import { createCommentsService } from "../services/comments/createComments.servi
 import { deleteCommentsByIdService } from "../services/comments/deleteCommentsById.service";
 import { listAllCommentsService } from "../services/comments/listAllComments.service";
 import { listAllCommentsBynewsService } from "../services/comments/listAllCommentsByNews.service";
+import { updateCommentsService } from "../services/comments/updateComment.service";
 
 export const createCommentsController = async (
   req: Request,
@@ -51,4 +52,17 @@ export const deleteCommentsByIdController = async (
   const commentId: string = req.params.id;
   await deleteCommentsByIdService(commentId);
   return res.status(204).json();
+};
+
+export const updateCommentsController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const commentId: string = req.params.id;
+  const body: iCommentsCreateBody = req.body;
+  const updateComments: iCommentsCreateReturn = await updateCommentsService(
+    body,
+    commentId
+  );
+  return res.status(201).json(updateComments);
 };

@@ -20,6 +20,11 @@ export const updateNewsService = async (
           tag: true,
         },
       },
+      commentsList: {
+        include: {
+          user: true,
+        },
+      },
     },
   });
 

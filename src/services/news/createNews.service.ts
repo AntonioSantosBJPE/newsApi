@@ -54,6 +54,11 @@ export const createNewsService = async (
           tag: true,
         },
       },
+      commentsList: {
+        include: {
+          user: true,
+        },
+      },
     },
   });
 

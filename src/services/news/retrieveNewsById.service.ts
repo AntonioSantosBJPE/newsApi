@@ -21,6 +21,11 @@ export const retrieveNewsByIdService = async (
           tag: true,
         },
       },
+      commentsList: {
+        include: {
+          user: true,
+        },
+      },
     },
   });
 
