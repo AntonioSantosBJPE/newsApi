@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createCommentsController,
+  listAllCommentsByNewsController,
   listAllCommentsController,
 } from "../controllers/comments.contoller";
 import { validateBodyMiddleware } from "../middlewares/global/validateBody.middleware";
@@ -16,6 +17,12 @@ commentsRoutes.post(
   validateNewsIdMiddleware,
   validateBodyMiddleware(CommentsCreateSchema),
   createCommentsController
+);
+
+commentsRoutes.get(
+  "/news/:id/",
+  validateNewsIdMiddleware,
+  listAllCommentsByNewsController
 );
 
 commentsRoutes.get("", listAllCommentsController);
