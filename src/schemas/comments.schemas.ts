@@ -13,6 +13,9 @@ const userSchema = z.object({
 export const CommentsCreateReturnSchema = z.object({
   id: z.number().positive().int(),
   message: z.string().max(200),
+  createdAt: z.date(),
   newsId: z.number().positive().int(),
   user: userSchema,
 });
+
+export const listCommentsReturn = CommentsCreateReturnSchema.array();

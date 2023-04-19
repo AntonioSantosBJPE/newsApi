@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { listCommentsReturn } from "./comments.schemas";
 const typeOptions: any = [
   "Outros",
   "Política",
@@ -51,6 +52,13 @@ const tags = z.object({
 export const ReturnNewsCreatedSchema = NewsSchema.extend({
   author: authorSchema,
   tagsList: tags.array(),
+  commentsList: listCommentsReturn,
+}).omit({
+  authorId: true,
 });
 
 export const ReturnListNewsSchema = ReturnNewsCreatedSchema.array();
+
+export const NewsReturnFullInfos = ReturnNewsCreatedSchema.extend({
+  commentsList: listCommentsReturn,
+});

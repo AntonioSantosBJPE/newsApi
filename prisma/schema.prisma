@@ -76,6 +76,9 @@ model TagsNews{
 model NewsComments{
   id Int @id @default(autoincrement())
   message String  @db.VarChar(200)
+  
+  createdAt DateTime @default(now())
+  
   news News @relation(fields: [newsId], references: [id], onDelete: Cascade)
   newsId Int 
 

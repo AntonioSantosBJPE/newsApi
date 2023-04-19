@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import {
   iNewsCreate,
   iNewsUpdate,
-  iReturnListNews,
+  iReturnListNewsPagination,
   iReturnNewsCreated,
 } from "../interfaces/news.interfaces";
 import { createNewsService } from "../services/news/createNews.service";
@@ -28,7 +28,7 @@ export const retrieveNewsController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const newsList: iReturnListNews = await retrieveNewsService(req);
+  const newsList: iReturnListNewsPagination = await retrieveNewsService(req);
   return res.status(200).json(newsList);
 };
 
