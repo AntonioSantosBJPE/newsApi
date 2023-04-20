@@ -1,14 +1,11 @@
-import {
-  iNewsCreate,
-  iReturnNewsCreated,
-} from "../../interfaces/news.interfaces";
-import { ReturnNewsCreatedSchema } from "../../schemas/news.schemas";
 import { prisma } from "../../server";
+import * as newsInterfaces from "../../interfaces/news.interfaces";
+import { ReturnNewsCreatedSchema } from "../../schemas/news.schemas";
 
 export const createNewsService = async (
   authorId: string,
-  payload: iNewsCreate
-): Promise<iReturnNewsCreated> => {
+  payload: newsInterfaces.iNewsCreate
+): Promise<newsInterfaces.iReturnNewsCreated> => {
   const { tags, ...dataCreateNews } = payload;
   const tagsUpper = tags.map((name) => name.toUpperCase());
 

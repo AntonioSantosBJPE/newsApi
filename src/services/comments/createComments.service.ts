@@ -1,16 +1,13 @@
-import {
-  iCommentsCreateBody,
-  iCommentsCreateReturn,
-} from "../../interfaces/comments.interfaces";
+import { prisma } from "../../server";
+import * as commentsInterfaces from "../../interfaces/comments.interfaces";
 import { IuserTokenInfos } from "../../interfaces/users.interfaces";
 import { CommentsCreateReturnSchema } from "../../schemas/comments.schemas";
-import { prisma } from "../../server";
 
 export const createCommentsService = async (
-  payload: iCommentsCreateBody,
+  payload: commentsInterfaces.iCommentsCreateBody,
   newsId: string,
   userInfos: IuserTokenInfos
-): Promise<iCommentsCreateReturn> => {
+): Promise<commentsInterfaces.iCommentsCreateReturn> => {
   const newComment = await prisma.newsComments.create({
     data: {
       message: payload.message!,
@@ -22,7 +19,7 @@ export const createCommentsService = async (
     },
   });
 
-  const response: iCommentsCreateReturn =
+  const response: commentsInterfaces.iCommentsCreateReturn =
     CommentsCreateReturnSchema.parse(newComment);
   return response;
 };

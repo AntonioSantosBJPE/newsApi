@@ -1,11 +1,5 @@
 import { Router } from "express";
-import {
-  createNewsController,
-  deleteNewsController,
-  retrieveNewsByIdController,
-  retrieveNewsController,
-  updateNewsController,
-} from "../controllers/news.controller";
+import * as newsController from "../controllers/news.controller";
 import { validateBodyMiddleware } from "../middlewares/global/validateBody.middleware";
 import { validateTokenJwtMiddleware } from "../middlewares/global/validateTokenJwt.middlewares";
 import { validateNewsOwnerdMiddleware } from "../middlewares/news/validateNewsOwner.middleware";
@@ -17,18 +11,18 @@ newsRoutes.post(
   "",
   validateTokenJwtMiddleware,
   validateBodyMiddleware(NewsCreateSchema),
-  createNewsController
+  newsController.createNewsController
 );
 
-newsRoutes.get("", retrieveNewsController);
+newsRoutes.get("", newsController.retrieveNewsController);
 
-newsRoutes.get("/:id/", retrieveNewsByIdController);
+newsRoutes.get("/:id/", newsController.retrieveNewsByIdController);
 
 newsRoutes.delete(
   "/:id/",
   validateTokenJwtMiddleware,
   validateNewsOwnerdMiddleware,
-  deleteNewsController
+  newsController.deleteNewsController
 );
 
 newsRoutes.patch(
@@ -36,5 +30,5 @@ newsRoutes.patch(
   validateTokenJwtMiddleware,
   validateNewsOwnerdMiddleware,
   validateBodyMiddleware(NewsUpdateSchema),
-  updateNewsController
+  newsController.updateNewsController
 );

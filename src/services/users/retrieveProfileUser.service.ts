@@ -2,7 +2,7 @@ import { prisma } from "../../server";
 import { User } from "@prisma/client";
 import { AppError } from "../../errors";
 import { UserReturnCreatedSchema } from "../../schemas/users.schemas";
-import { validateFindUser } from "./logics.service";
+import * as logics from "./logics";
 
 export const retrieveProfileUserService = async (
   userIdParams: string
@@ -17,7 +17,7 @@ export const retrieveProfileUserService = async (
     },
   });
 
-  validateFindUser(findUser, "User not found", 404);
+  logics.validateFindUser(findUser, "User not found", 404);
 
   const responseUserProfileSerializer = UserReturnCreatedSchema.parse(findUser);
 

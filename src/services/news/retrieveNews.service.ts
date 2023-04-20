@@ -1,26 +1,11 @@
 import { Prisma } from "@prisma/client";
 import { Request } from "express";
-import {
-  iReturnListNews,
-  iReturnListNewsPagination,
-} from "../../interfaces/news.interfaces";
+import { iReturnListNewsPagination } from "../../interfaces/news.interfaces";
 import { ReturnListNewsSchema } from "../../schemas/news.schemas";
+import { typeOptions } from "../../schemas/news.schemas";
 import { prisma } from "../../server";
+import * as logics from "./logics";
 import "dotenv/config";
-import { createUrlsPagination } from "./logics/createUrlsPagination";
-import { validateQuerysPagination } from "./logics/validateQuerysPagination";
-
-const typeOptions: string[] = [
-  "Outros",
-  "Política",
-  "Economia",
-  "Cultura",
-  "Segurança",
-  "Saúde",
-  "Educação",
-  "Esportes",
-  "Tecnologia",
-];
 
 export const retrieveNewsService = async (
   req: Request
@@ -45,12 +30,10 @@ export const retrieveNewsService = async (
     },
   });
 
-  const { perPage, page, pageInitial, orderBy } = validateQuerysPagination(
-    req,
-    countNewsFilter
-  );
+  const { perPage, page, pageInitial, orderBy } =
+    logics.validateQuerysPagination(req, countNewsFilter);
 
-  const { urlNextPage, urlPreviousPage } = createUrlsPagination(
+  const { urlNextPage, urlPreviousPage } = logics.createUrlsPagination(
     perPage,
     pageInitial,
     orderBy,

@@ -1,27 +1,24 @@
+import { Response } from "express";
 import { User } from "@prisma/client";
 import { prisma } from "../../server";
 import { compare } from "bcryptjs";
 import { AppError } from "../../errors";
-import {
-  iUserLogin,
-  iUserTokensResponse,
-} from "../../interfaces/users.interfaces";
+import * as usersInterfaces from "../../interfaces/users.interfaces";
 import { sign } from "jsonwebtoken";
-import { validateFindUser } from "./logics.service";
+import * as logics from "./logics";
 import "dotenv/config";
-import { Response } from "express";
 
 export const loginUsersService = async (
-  payload: iUserLogin,
+  payload: usersInterfaces.iUserLogin,
   res: Response
-): Promise<iUserTokensResponse> => {
+): Promise<usersInterfaces.iUserTokensResponse> => {
   const findUser: User | null = await prisma.user.findUnique({
     where: {
       email: payload.email,
     },
   });
 
-  validateFindUser(findUser, "Invalid credentials", 401);
+  logics.validateFindUser(findUser, "Invalid credentials", 401);
 
   const passwordMatch: boolean = await compare(
     payload.password,
@@ -58,6 +55,5 @@ export const loginUsersService = async (
     }
   );
 
-  //res.cookie("refreshToken", refreshToken, { httpOnly: true });
   return { accessToken, refreshToken };
 };

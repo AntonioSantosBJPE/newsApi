@@ -1,10 +1,12 @@
 import { z } from "zod";
-import {
-  CommentsCreateReturnSchema,
-  CommentsCreateSchema,
-  listCommentsReturn,
-} from "../schemas/comments.schemas";
+import * as commentsSchemas from "../schemas/comments.schemas";
 
-export type iCommentsCreateBody = z.infer<typeof CommentsCreateSchema>;
-export type iCommentsCreateReturn = z.infer<typeof CommentsCreateReturnSchema>;
-export type iCommentsListReturn = z.infer<typeof listCommentsReturn>;
+export type iCommentsCreateBody = z.infer<
+  typeof commentsSchemas.CommentsCreateSchema
+>;
+export type iCommentsCreateReturn = z.infer<
+  typeof commentsSchemas.CommentsCreateReturnSchema
+>;
+export type iCommentsListReturn = z.infer<
+  typeof commentsSchemas.listCommentsReturn
+>;

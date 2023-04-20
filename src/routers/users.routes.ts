@@ -1,68 +1,56 @@
 import { Router } from "express";
-import {
-  createUsersController,
-  deleteUserController,
-  loginRefreshUsersController,
-  loginUsersController,
-  retrieveProfileUserContoller,
-  retrieveUsersController,
-  updateUserController,
-} from "../controllers/users.controller";
+import * as userController from "../controllers/users.controller";
 import { validateBodyMiddleware } from "../middlewares/global/validateBody.middleware";
 import { validatePermissionUserIdMiddleware } from "../middlewares/users/validatePermissionUserId.middlewares";
 import { validateTokenJwtMiddleware } from "../middlewares/global/validateTokenJwt.middlewares";
-import {
-  UserCreateSchema,
-  UserLoginRefreshSchema,
-  UserLoginSchema,
-  UserUpdateSchema,
-} from "../schemas/users.schemas";
+import * as userSchemas from "../schemas/users.schemas";
 import { validatePermissionUserAdminMiddleware } from "../middlewares/global/validateUserAdmin.middleware";
+
 export const usersRoutes: Router = Router();
 
 usersRoutes.post(
   "",
-  validateBodyMiddleware(UserCreateSchema),
-  createUsersController
+  validateBodyMiddleware(userSchemas.UserCreateSchema),
+  userController.createUsersController
 );
 
 usersRoutes.post(
   "/login/",
-  validateBodyMiddleware(UserLoginSchema),
-  loginUsersController
+  validateBodyMiddleware(userSchemas.UserLoginSchema),
+  userController.loginUsersController
 );
 
 usersRoutes.post(
   "/login/refresh-token/",
-  validateBodyMiddleware(UserLoginRefreshSchema),
-  loginRefreshUsersController
+  validateBodyMiddleware(userSchemas.UserLoginRefreshSchema),
+  userController.loginRefreshUsersController
 );
 
 usersRoutes.get(
   "",
   validateTokenJwtMiddleware,
   validatePermissionUserAdminMiddleware,
-  retrieveUsersController
+  userController.retrieveUsersController
 );
 
 usersRoutes.get(
   "/profile/:id/",
   validateTokenJwtMiddleware,
   validatePermissionUserIdMiddleware,
-  retrieveProfileUserContoller
+  userController.retrieveProfileUserContoller
 );
 
 usersRoutes.delete(
   "/:id/",
   validateTokenJwtMiddleware,
   validatePermissionUserIdMiddleware,
-  deleteUserController
+  userController.deleteUserController
 );
 
 usersRoutes.patch(
   "/:id/",
   validateTokenJwtMiddleware,
   validatePermissionUserIdMiddleware,
-  validateBodyMiddleware(UserUpdateSchema),
-  updateUserController
+  validateBodyMiddleware(userSchemas.UserUpdateSchema),
+  userController.updateUserController
 );

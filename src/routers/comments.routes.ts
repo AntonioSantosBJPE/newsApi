@@ -1,11 +1,5 @@
 import { Router } from "express";
-import {
-  createCommentsController,
-  deleteCommentsByIdController,
-  listAllCommentsByNewsController,
-  listAllCommentsController,
-  updateCommentsController,
-} from "../controllers/comments.contoller";
+import * as commentsContoller from "../controllers/comments.contoller";
 import { validateCommentOwnerdMiddleware } from "../middlewares/comments/validateCommentOwner.middleware";
 import { validateBodyMiddleware } from "../middlewares/global/validateBody.middleware";
 import { validateTokenJwtMiddleware } from "../middlewares/global/validateTokenJwt.middlewares";
@@ -19,22 +13,22 @@ commentsRoutes.post(
   validateTokenJwtMiddleware,
   validateNewsIdMiddleware,
   validateBodyMiddleware(CommentsCreateSchema),
-  createCommentsController
+  commentsContoller.createCommentsController
 );
 
 commentsRoutes.get(
   "/news/:id/",
   validateNewsIdMiddleware,
-  listAllCommentsByNewsController
+  commentsContoller.listAllCommentsByNewsController
 );
 
-commentsRoutes.get("", listAllCommentsController);
+commentsRoutes.get("", commentsContoller.listAllCommentsController);
 
 commentsRoutes.delete(
   "/:id/",
   validateTokenJwtMiddleware,
   validateCommentOwnerdMiddleware,
-  deleteCommentsByIdController
+  commentsContoller.deleteCommentsByIdController
 );
 
 commentsRoutes.patch(
@@ -42,5 +36,5 @@ commentsRoutes.patch(
   validateTokenJwtMiddleware,
   validateCommentOwnerdMiddleware,
   validateBodyMiddleware(CommentsCreateSchema),
-  updateCommentsController
+  commentsContoller.updateCommentsController
 );

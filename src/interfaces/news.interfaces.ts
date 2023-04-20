@@ -1,17 +1,15 @@
 import { z } from "zod";
-import {
-  NewsCreateSchema,
-  NewsReturnFullInfos,
-  NewsUpdateSchema,
-  ReturnListNewsSchema,
-  ReturnNewsCreatedSchema,
-} from "../schemas/news.schemas";
+import * as newsSchemas from "../schemas/news.schemas";
 
-export type iNewsCreate = z.infer<typeof NewsCreateSchema>;
-export type iNewsUpdate = z.infer<typeof NewsUpdateSchema>;
-export type iReturnNewsCreated = z.infer<typeof ReturnNewsCreatedSchema>;
-export type iReturnListNews = z.infer<typeof ReturnListNewsSchema>;
-export type iReturnNewsFullInfos = z.infer<typeof NewsReturnFullInfos>;
+export type iNewsCreate = z.infer<typeof newsSchemas.NewsCreateSchema>;
+export type iNewsUpdate = z.infer<typeof newsSchemas.NewsUpdateSchema>;
+export type iReturnNewsCreated = z.infer<
+  typeof newsSchemas.ReturnNewsCreatedSchema
+>;
+export type iReturnListNews = z.infer<typeof newsSchemas.ReturnListNewsSchema>;
+export type iReturnNewsFullInfos = z.infer<
+  typeof newsSchemas.NewsReturnFullInfos
+>;
 
 export interface iCreateUrlsPagination {
   urlNextPage: string | null;

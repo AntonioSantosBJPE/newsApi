@@ -1,26 +1,15 @@
 import { Request, Response } from "express";
-import {
-  iNewsCreate,
-  iNewsUpdate,
-  iReturnListNewsPagination,
-  iReturnNewsCreated,
-} from "../interfaces/news.interfaces";
-import { createNewsService } from "../services/news/createNews.service";
-import { deleteNewsService } from "../services/news/deleteNews.service";
-import { retrieveNewsService } from "../services/news/retrieveNews.service";
-import { retrieveNewsByIdService } from "../services/news/retrieveNewsById.service";
-import { updateNewsService } from "../services/news/updateNews.service";
+import * as newsInterfaces from "../interfaces/news.interfaces";
+import * as newsServices from "../services/news";
 
 export const createNewsController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
   const authorId: string = req.userTokenInfos.id;
-  const body: iNewsCreate = req.body;
-  const newsCreated: iReturnNewsCreated = await createNewsService(
-    authorId,
-    body
-  );
+  const body: newsInterfaces.iNewsCreate = req.body;
+  const newsCreated: newsInterfaces.iReturnNewsCreated =
+    await newsServices.createNewsService(authorId, body);
   return res.status(201).json(newsCreated);
 };
 
@@ -28,7 +17,8 @@ export const retrieveNewsController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const newsList: iReturnListNewsPagination = await retrieveNewsService(req);
+  const newsList: newsInterfaces.iReturnListNewsPagination =
+    await newsServices.retrieveNewsService(req);
   return res.status(200).json(newsList);
 };
 
@@ -37,7 +27,8 @@ export const retrieveNewsByIdController = async (
   res: Response
 ): Promise<Response> => {
   const news_id: string = req.params.id;
-  const news: iReturnNewsCreated = await retrieveNewsByIdService(news_id);
+  const news: newsInterfaces.iReturnNewsCreated =
+    await newsServices.retrieveNewsByIdService(news_id);
   return res.status(200).json(news);
 };
 
@@ -46,7 +37,7 @@ export const deleteNewsController = async (
   res: Response
 ): Promise<Response> => {
   const news_id: string = req.params.id;
-  await deleteNewsService(news_id);
+  await newsServices.deleteNewsService(news_id);
   return res.status(204).json();
 };
 
@@ -55,10 +46,8 @@ export const updateNewsController = async (
   res: Response
 ): Promise<Response> => {
   const news_id: string = req.params.id;
-  const body: iNewsUpdate = req.body;
-  const updatedNews: iReturnNewsCreated = await updateNewsService(
-    news_id,
-    body
-  );
+  const body: newsInterfaces.iNewsUpdate = req.body;
+  const updatedNews: newsInterfaces.iReturnNewsCreated =
+    await newsServices.updateNewsService(news_id, body);
   return res.status(200).json(updatedNews);
 };
