@@ -1,16 +1,10 @@
 import { Router } from "express";
-import {
-  addTagsInNewsController,
-  createTagsController,
-  deleteTagsController,
-  removeTagsInNewsController,
-  retrieveTagsController,
-} from "../controllers/tags.controller";
+import * as tagsController from "../controllers/tags.controller";
 import { validateBodyMiddleware } from "../middlewares/global/validateBody.middleware";
 import { validateTokenJwtMiddleware } from "../middlewares/global/validateTokenJwt.middlewares";
 import { validatePermissionUserAdminMiddleware } from "../middlewares/global/validateUserAdmin.middleware";
 import { validateNewsOwnerdMiddleware } from "../middlewares/news/validateNewsOwner.middleware";
-import { CreateTagsSchema, DeleteTagsSchema } from "../schemas/tags.schemas";
+import { CreateTagsSchema } from "../schemas/tags.schemas";
 
 export const tagsRoutes: Router = Router();
 
@@ -18,17 +12,17 @@ tagsRoutes.post(
   "",
   validateTokenJwtMiddleware,
   validateBodyMiddleware(CreateTagsSchema),
-  createTagsController
+  tagsController.createTagsController
 );
 
-tagsRoutes.get("", retrieveTagsController);
+tagsRoutes.get("", tagsController.retrieveTagsController);
 
 tagsRoutes.delete(
   "",
   validateTokenJwtMiddleware,
   validatePermissionUserAdminMiddleware,
   validateBodyMiddleware(CreateTagsSchema),
-  deleteTagsController
+  tagsController.deleteTagsController
 );
 
 tagsRoutes.post(
@@ -36,7 +30,7 @@ tagsRoutes.post(
   validateTokenJwtMiddleware,
   validateNewsOwnerdMiddleware,
   validateBodyMiddleware(CreateTagsSchema),
-  addTagsInNewsController
+  tagsController.addTagsInNewsController
 );
 
 tagsRoutes.delete(
@@ -44,5 +38,5 @@ tagsRoutes.delete(
   validateTokenJwtMiddleware,
   validateNewsOwnerdMiddleware,
   validateBodyMiddleware(CreateTagsSchema),
-  removeTagsInNewsController
+  tagsController.removeTagsInNewsController
 );

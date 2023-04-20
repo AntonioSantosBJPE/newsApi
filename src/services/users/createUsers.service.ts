@@ -2,15 +2,12 @@ import { User } from "@prisma/client";
 import { prisma } from "../../server";
 import { hash } from "bcryptjs";
 import { AppError } from "../../errors";
-import {
-  iUserCreate,
-  iUserReturnCreated,
-} from "../../interfaces/users.interfaces";
+import * as usersInterfaces from "../../interfaces/users.interfaces";
 import { UserReturnCreatedSchema } from "../../schemas/users.schemas";
 
 export const createUsersService = async (
-  payload: iUserCreate
-): Promise<iUserReturnCreated> => {
+  payload: usersInterfaces.iUserCreate
+): Promise<usersInterfaces.iUserReturnCreated> => {
   const findEmailUser: User | null = await prisma.user.findUnique({
     where: {
       email: payload.email,
@@ -27,6 +24,7 @@ export const createUsersService = async (
       ...payload,
     },
   });
-  const responseUser: iUserReturnCreated = UserReturnCreatedSchema.parse(user);
+  const responseUser: usersInterfaces.iUserReturnCreated =
+    UserReturnCreatedSchema.parse(user);
   return responseUser;
 };

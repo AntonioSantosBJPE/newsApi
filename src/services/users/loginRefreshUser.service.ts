@@ -1,15 +1,13 @@
+import { Request } from "express";
 import { AppError } from "../../errors";
 import { iUserLoginrefresh } from "../../interfaces/users.interfaces";
 import { sign, verify, VerifyErrors } from "jsonwebtoken";
 import "dotenv/config";
-import { Request } from "express";
 
 export const loginRefreshUsersService = async (
   payload: iUserLoginrefresh,
   req: Request
 ): Promise<string> => {
-  //const refreshToken = req.cookies.refreshToken;
-
   verify(
     payload.token,
     String(process.env.SECRET_KEY),

@@ -1,5 +1,5 @@
 import { User } from "@prisma/client";
-import { AppError } from "../../errors";
+import { AppError } from "../../../errors";
 
 export const validateFindUser = (
   findUser: User | null,

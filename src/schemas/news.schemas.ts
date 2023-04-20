@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { listCommentsReturn } from "./comments.schemas";
-const typeOptions: any = [
+export const typeOptions: any = [
   "Outros",
   "Política",
   "Economia",
