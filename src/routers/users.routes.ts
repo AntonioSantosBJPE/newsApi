@@ -5,6 +5,7 @@ import { validatePermissionUserIdMiddleware } from "../middlewares/users/validat
 import { validateTokenJwtMiddleware } from "../middlewares/global/validateTokenJwt.middlewares";
 import * as userSchemas from "../schemas/users.schemas";
 import { validatePermissionUserAdminMiddleware } from "../middlewares/global/validateUserAdmin.middleware";
+import { validateUserIdMiddleware } from "../middlewares/users/validateUserIdmiddleware";
 
 export const usersRoutes: Router = Router();
 
@@ -37,6 +38,7 @@ usersRoutes.get(
   "/profile/:id/",
   validateTokenJwtMiddleware,
   validatePermissionUserIdMiddleware,
+  validateUserIdMiddleware,
   userController.retrieveProfileUserContoller
 );
 
@@ -44,6 +46,7 @@ usersRoutes.delete(
   "/:id/",
   validateTokenJwtMiddleware,
   validatePermissionUserIdMiddleware,
+  validateUserIdMiddleware,
   userController.deleteUserController
 );
 
@@ -51,6 +54,7 @@ usersRoutes.patch(
   "/:id/",
   validateTokenJwtMiddleware,
   validatePermissionUserIdMiddleware,
+  validateUserIdMiddleware,
   validateBodyMiddleware(userSchemas.UserUpdateSchema),
   userController.updateUserController
 );

@@ -6,7 +6,7 @@ export const validateQuerysPagination = (
 ): iValidateQuerysPagination => {
   let orderBy = req.query.orderBy?.toString().toLowerCase() || "desc";
   const sortOrder: string[] = ["asc", "desc"];
-  if (sortOrder.includes(orderBy)) orderBy = "desc";
+  if (!sortOrder.includes(orderBy)) orderBy = "desc";
 
   let page: number = Number(req.query.page) || 1;
   let perPage: number = Number(req.query.perPage) || 5;
