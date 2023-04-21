@@ -23,7 +23,6 @@ tagsRoutes.delete(
   validateTokenJwtMiddleware,
   validatePermissionUserAdminMiddleware,
   validateTagIdMiddleware,
-  // validateBodyMiddleware(CreateTagsSchema),
   tagsController.deleteTagsController
 );
 

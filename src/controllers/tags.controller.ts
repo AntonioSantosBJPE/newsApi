@@ -25,10 +25,8 @@ export const deleteTagsController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  // const listTagsId: iTagsCreate = req.body;
   const tagId = req.params.id;
   await tagsServices.deleteTagsService(tagId);
-  // await tagsServices.deleteTagsService(listTagsId);
   return res.status(204).json();
 };
 
