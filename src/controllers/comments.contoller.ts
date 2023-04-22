@@ -51,5 +51,5 @@ export const updateCommentsController = async (
   const body: commentsInterfaces.iCommentsCreateBody = req.body;
   const updateComments: commentsInterfaces.iCommentsCreateReturn =
     await commentsService.updateCommentsService(body, commentId);
-  return res.status(201).json(updateComments);
+  return res.status(200).json(updateComments);
 };
