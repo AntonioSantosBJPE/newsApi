@@ -9,8 +9,12 @@ export const validateNewsOwnerdMiddleware = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const newsIdParams: string = req.params.id;
+  let newsIdParams: string = req.params.id;
   const userInfosToken: IuserTokenInfos = req.userTokenInfos;
+
+  if (req.route.path === "/:tagId/news/:newsId/") {
+    newsIdParams = req.params.newsId;
+  }
 
   if (isNaN(Number(newsIdParams))) {
     throw new AppError("News not found", 404);

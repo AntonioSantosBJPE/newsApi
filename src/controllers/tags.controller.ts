@@ -45,8 +45,8 @@ export const removeTagsInNewsController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const body: iTagsCreate = req.body;
-  const newsId: string = req.params.id;
-  await tagsServices.removeTagsInNewsService(body, newsId);
+  const tagId: string = req.params.tagId;
+  const newsId: string = req.params.newsId;
+  await tagsServices.removeTagsInNewsService(tagId, newsId);
   return res.status(204).json();
 };

@@ -8,7 +8,12 @@ export const validateTagIdMiddleware = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const tagIdParams: string = req.params.id;
+  let tagIdParams: string = req.params.id;
+
+  if (req.route.path === "/:tagId/news/:newsId/") {
+    tagIdParams = req.params.tagId;
+  }
+
   if (isNaN(Number(tagIdParams))) {
     throw new AppError("Tag not found", 404);
   }

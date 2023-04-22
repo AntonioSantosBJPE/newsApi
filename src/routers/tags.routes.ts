@@ -35,9 +35,9 @@ tagsRoutes.post(
 );
 
 tagsRoutes.delete(
-  "/news/:id/",
+  "/:tagId/news/:newsId/",
   validateTokenJwtMiddleware,
   validateNewsOwnerdMiddleware,
-  validateBodyMiddleware(CreateTagsSchema),
+  validateTagIdMiddleware,
   tagsController.removeTagsInNewsController
 );

@@ -1,13 +1,10 @@
-import { Prisma } from "@prisma/client";
-import { iTagsCreate } from "../../interfaces/tags.interfaces";
+import { AppError } from "../../errors";
 import { prisma } from "../../server";
 
 export const removeTagsInNewsService = async (
-  payload: iTagsCreate,
+  tagId: string,
   newsId: string
 ): Promise<void> => {
-  const tagsPayload: string[] = payload.tags.map((name) => name.toUpperCase());
-
   const findRelationsNewsTags = await prisma.tagsNews.findMany({
     where: {
       newsId: Number(newsId),
@@ -17,17 +14,17 @@ export const removeTagsInNewsService = async (
     },
   });
 
-  const filterTagsExistsInNews = findRelationsNewsTags.filter((item) =>
-    tagsPayload.includes(item.tag.name)
+  const filterTagsExistsInNews = findRelationsNewsTags.find(
+    (item) => item.newsId === Number(newsId) && item.tagId === Number(tagId)
   );
 
-  const findTagsExistsInNews: number[] = filterTagsExistsInNews.map(
-    (item) => item.id
-  );
+  if (!filterTagsExistsInNews) {
+    throw new AppError("Tag not found in News", 404);
+  }
 
-  const deleteTag: Prisma.BatchPayload = await prisma.tagsNews.deleteMany({
+  await prisma.tagsNews.delete({
     where: {
-      id: { in: findTagsExistsInNews },
+      id: filterTagsExistsInNews.id,
     },
   });
 };
