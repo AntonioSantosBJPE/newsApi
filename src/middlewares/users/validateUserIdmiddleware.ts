@@ -18,7 +18,7 @@ export const validateUserIdMiddleware = async (
       id: Number(userIdParams),
     },
   });
-  console.log(findUser);
+
   if (!findUser) {
     throw new AppError("User not found", 404);
   }

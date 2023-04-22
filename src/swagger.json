@@ -1162,6 +1162,107 @@
         ]
       }
     },
+    "/news/users/": {
+      "get": {
+        "tags": ["News"],
+        "summary": "Buscar todas as notícias criadas pelo usuário logado",
+        "description": "Esta rota será responsável por buscar todas as notícias criadas pelo usuário logado. É necessaário enviar um token de autorização. A rota fará uso das informações do usuário, contidas no token.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": 1,
+                    "title": "teste news 1",
+                    "subTitle": "teste sub title",
+                    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+                    "type": "Educação",
+                    "published": true,
+                    "createdAt": "2023-04-18T22:24:47.455Z",
+                    "updatedAt": "2023-04-18T22:24:47.455Z",
+                    "authot": {
+                      "id": 1,
+                      "name": "Gabriel1",
+                      "email": "rf.gabriel12@gmail.com"
+                    },
+                    "tagsList": [
+                      {
+                        "id": 1,
+                        "tag": {
+                          "id": 1,
+                          "name": "ENSINO"
+                        }
+                      },
+                      {
+                        "id": 2,
+                        "tag": {
+                          "id": 2,
+                          "name": "PESQUISA"
+                        }
+                      }
+                    ],
+                    "commentsList": [
+                      {
+                        "id": 1,
+                        "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor",
+                        "createdAt": "2023-04-18T12:11:13.697Z",
+                        "newsId": "1,",
+                        "user": {
+                          "id": 2,
+                          "name": "Antonio Santos",
+                          "email": "antonio@gmail.com"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Não foi enviado um token de autorização, o token enviado expirou ou o token é inválido.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "missing_bearer_token": {
+                    "value": {
+                      "message": "Missing bearer token"
+                    }
+                  },
+                  "jwt_expired": {
+                    "value": {
+                      "message": "jwt expired"
+                    }
+                  },
+                  "invalid_token": {
+                    "value": {
+                      "message": "JWT Invalid"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Internal Server Error."
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/tags/": {
       "get": {
         "tags": ["Tags"],

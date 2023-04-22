@@ -3,6 +3,7 @@ import * as newsController from "../controllers/news.controller";
 import { validateBodyMiddleware } from "../middlewares/global/validateBody.middleware";
 import { validateTokenJwtMiddleware } from "../middlewares/global/validateTokenJwt.middlewares";
 import { validateNewsOwnerdMiddleware } from "../middlewares/news/validateNewsOwner.middleware";
+import { validateUserIdMiddleware } from "../middlewares/users/validateUserIdmiddleware";
 import { NewsCreateSchema, NewsUpdateSchema } from "../schemas/news.schemas";
 
 export const newsRoutes: Router = Router();
@@ -15,6 +16,12 @@ newsRoutes.post(
 );
 
 newsRoutes.get("", newsController.retrieveNewsController);
+
+newsRoutes.get(
+  "/users/",
+  validateTokenJwtMiddleware,
+  newsController.retrieveNewsByUserIdController
+);
 
 newsRoutes.get("/:id/", newsController.retrieveNewsByIdController);
 

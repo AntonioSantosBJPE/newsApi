@@ -58,7 +58,3 @@ export const ReturnNewsCreatedSchema = NewsSchema.extend({
 });
 
 export const ReturnListNewsSchema = ReturnNewsCreatedSchema.array();
-
-export const NewsReturnFullInfos = ReturnNewsCreatedSchema.extend({
-  commentsList: listCommentsReturn,
-});

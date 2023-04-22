@@ -26,9 +26,19 @@ export const retrieveNewsByIdController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const news_id: string = req.params.id;
+  const newsId: string = req.params.id;
   const news: newsInterfaces.iReturnNewsCreated =
-    await newsServices.retrieveNewsByIdService(news_id);
+    await newsServices.retrieveNewsByIdService(newsId);
+  return res.status(200).json(news);
+};
+
+export const retrieveNewsByUserIdController = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const userId: string = req.userTokenInfos.id;
+  const news: newsInterfaces.iReturnListNews =
+    await newsServices.retrieveNewsByUserIdService(userId);
   return res.status(200).json(news);
 };
 
@@ -36,8 +46,8 @@ export const deleteNewsController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const news_id: string = req.params.id;
-  await newsServices.deleteNewsService(news_id);
+  const newsId: string = req.params.id;
+  await newsServices.deleteNewsService(newsId);
   return res.status(204).json();
 };
 
@@ -45,9 +55,9 @@ export const updateNewsController = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const news_id: string = req.params.id;
+  const newsId: string = req.params.id;
   const body: newsInterfaces.iNewsUpdate = req.body;
   const updatedNews: newsInterfaces.iReturnNewsCreated =
-    await newsServices.updateNewsService(news_id, body);
+    await newsServices.updateNewsService(newsId, body);
   return res.status(200).json(updatedNews);
 };

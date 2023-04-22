@@ -7,9 +7,6 @@ export type iReturnNewsCreated = z.infer<
   typeof newsSchemas.ReturnNewsCreatedSchema
 >;
 export type iReturnListNews = z.infer<typeof newsSchemas.ReturnListNewsSchema>;
-export type iReturnNewsFullInfos = z.infer<
-  typeof newsSchemas.NewsReturnFullInfos
->;
 
 export interface iCreateUrlsPagination {
   urlNextPage: string | null;
