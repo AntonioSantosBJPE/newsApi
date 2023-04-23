@@ -20,7 +20,7 @@
       "post": {
         "tags": ["Users"],
         "summary": "Cadastro de novo usuário",
-        "description": "Esta rota é responsável por criar um novo usuário. As chaves \"email\", \"name\" e \"password\" são obrigatórias e chaves extras enviadas são desconsideradas. A chave \"isAdmin\" é opcional, e define se o usuário criado será um administrador do sistema (\"isAdmin\" = true) ou um usuário padrão (\"isAdmin\" = false, valor default). Não é possível criar um usuário com um email já existente.",
+        "description": "Esta rota é responsável por criar um novo usuário. As chaves \"email\", \"name\" e \"password\" são obrigatórias e chaves extras enviadas são desconsideradas. A chave \"isAdmin\" é opcional, e define se o usuário criado será um administrador do sistema (\"isAdmin\" = true) ou um usuário padrão (\"isAdmin\" = false, valor default). Não é possível criar um usuário com um email já existente. A senha precisa conter no mínimo 8 caracteres, sendo ao menos uma letra minúscula, uma letra maiúscula, um número, e um caracter especial.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -76,6 +76,19 @@
                     "value": {
                       "message": {
                         "password": ["Expected string", "received number"]
+                      }
+                    }
+                  },
+                  "bad_request_invalid_password_2": {
+                    "value": {
+                      "message": {
+                        "password": [
+                          "One uppercase character",
+                          "One lowercase character",
+                          "One number",
+                          "One special character",
+                          "String must contain at least 8 character(s)"
+                        ]
                       }
                     }
                   }
@@ -360,7 +373,13 @@
               "application/json": {
                 "example": {
                   "message": {
-                    "password": ["Expected string, received number"]
+                    "password": [
+                      "One uppercase character",
+                      "One lowercase character",
+                      "One number",
+                      "One special character",
+                      "String must contain at least 8 character(s)"
+                    ]
                   }
                 }
               }
