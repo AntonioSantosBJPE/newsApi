@@ -14,7 +14,7 @@ export const typeOptions: any = [
 export const NewsSchema = z.object({
   id: z.number().positive().int(),
   title: z.string().max(80),
-  subTitle: z.string(),
+  subTitle: z.string().max(200),
   content: z.string(),
   type: z.enum(typeOptions),
   published: z.boolean(),
@@ -58,7 +58,3 @@ export const ReturnNewsCreatedSchema = NewsSchema.extend({
 });
 
 export const ReturnListNewsSchema = ReturnNewsCreatedSchema.array();
-
-export const NewsReturnFullInfos = ReturnNewsCreatedSchema.extend({
-  commentsList: listCommentsReturn,
-});

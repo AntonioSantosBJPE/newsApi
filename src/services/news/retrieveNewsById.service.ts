@@ -4,15 +4,15 @@ import { ReturnNewsCreatedSchema } from "../../schemas/news.schemas";
 import { prisma } from "../../server";
 
 export const retrieveNewsByIdService = async (
-  news_id: string
+  newsId: string
 ): Promise<iReturnNewsCreated> => {
-  if (isNaN(Number(news_id))) {
+  if (isNaN(Number(newsId))) {
     throw new AppError("News not found", 404);
   }
 
   const find_news = await prisma.news.findUnique({
     where: {
-      id: Number(news_id),
+      id: Number(newsId),
     },
     include: {
       author: true,

@@ -4,6 +4,7 @@ import { validateBodyMiddleware } from "../middlewares/global/validateBody.middl
 import { validateTokenJwtMiddleware } from "../middlewares/global/validateTokenJwt.middlewares";
 import { validatePermissionUserAdminMiddleware } from "../middlewares/global/validateUserAdmin.middleware";
 import { validateNewsOwnerdMiddleware } from "../middlewares/news/validateNewsOwner.middleware";
+import { validateTagIdMiddleware } from "../middlewares/tags/validateTagId.middleware";
 import { CreateTagsSchema } from "../schemas/tags.schemas";
 
 export const tagsRoutes: Router = Router();
@@ -18,10 +19,10 @@ tagsRoutes.post(
 tagsRoutes.get("", tagsController.retrieveTagsController);
 
 tagsRoutes.delete(
-  "",
+  "/:id/",
   validateTokenJwtMiddleware,
   validatePermissionUserAdminMiddleware,
-  validateBodyMiddleware(CreateTagsSchema),
+  validateTagIdMiddleware,
   tagsController.deleteTagsController
 );
 
@@ -34,9 +35,9 @@ tagsRoutes.post(
 );
 
 tagsRoutes.delete(
-  "/news/:id/",
+  "/:tagId/news/:newsId/",
   validateTokenJwtMiddleware,
   validateNewsOwnerdMiddleware,
-  validateBodyMiddleware(CreateTagsSchema),
+  validateTagIdMiddleware,
   tagsController.removeTagsInNewsController
 );

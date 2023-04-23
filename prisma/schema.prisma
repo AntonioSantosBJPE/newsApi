@@ -30,10 +30,10 @@ model User {
 
 model News{
   id    Int       @id @default(autoincrement())
-  title String
-  subTitle String
+  title String    @db.VarChar(80)
+  subTitle String @db.VarChar(200)
   content String
-  type String @default("Outros")
+  type String @db.VarChar(30) @default("Outros")
 
   published Boolean @default(true)
 

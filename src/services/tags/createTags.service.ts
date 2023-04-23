@@ -18,10 +18,7 @@ export const createTagsService = async (
   });
 
   if (createManyTags.count === 0) {
-    throw new AppError(
-      `The tags /${payload.tags}/ sent already exist in the news`,
-      400
-    );
+    throw new AppError(`The tags /${payload.tags}/ sent already exist`, 400);
   }
 
   const response: Tag[] = await prisma.tag.findMany({
